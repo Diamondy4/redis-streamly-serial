@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      Database.Redis.Streams.Serialize
       Database.Redis.Streams.Streamly.Serialize
   other-modules:
       Paths_redis_streamly_serial
