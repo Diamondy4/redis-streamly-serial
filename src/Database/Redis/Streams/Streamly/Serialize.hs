@@ -13,12 +13,15 @@ import qualified Database.Redis.Streams.Streamly
 import           Streamly.Prelude               ( IsStream )
 import qualified Streamly.Prelude              as Streamly
 
-read
+readStream
     :: (IsStream t, Serialise a) => String -> t Redis (Either WineryException a)
-read streamIn =
+readStream streamIn =
       -- Key should be "data", but not checked for performance
-    SRedis.read streamIn & Streamly.map \(_key, value) -> deserialise value
+                      SRedis.readStream streamIn
+    & Streamly.map \(_key, value) -> deserialise value
 
-send :: Serialise a => String -> Streamly.SerialT Redis a -> Redis ()
-send streamOut stream =
-    stream & Streamly.map (\x -> ("data", serialise x)) & SRedis.send streamOut
+sendStream :: Serialise a => String -> Streamly.SerialT Redis a -> Redis ()
+sendStream streamOut stream =
+    stream
+        & Streamly.map (\x -> ("data", serialise x))
+        & SRedis.sendStream streamOut
