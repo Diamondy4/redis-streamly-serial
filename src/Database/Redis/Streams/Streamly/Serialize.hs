@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE BlockArguments #-}
+{-# LANGUAGE RankNTypes #-}
 
 module Database.Redis.Streams.Streamly.Serialize where
 
@@ -14,7 +15,8 @@ import           Streamly.Prelude               ( IsStream )
 import qualified Streamly.Prelude              as Streamly
 
 readStream
-    :: (IsStream t, Serialise a)
+    :: forall a t
+     . (IsStream t, Serialise a)
     => String
     -> t Redis (ByteString, Either WineryException a)
 readStream streamIn =
@@ -23,7 +25,8 @@ readStream streamIn =
     & Streamly.map \(msgId, (_key, value)) -> (msgId, deserialise value)
 
 readStreamFrom
-    :: (IsStream t, Serialise a)
+    :: forall a t
+     . (IsStream t, Serialise a)
     => String
     -> ByteString
     -> t Redis (ByteString, Either WineryException a)
