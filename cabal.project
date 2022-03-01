@@ -4,7 +4,7 @@ packages:
 source-repository-package
   type: git
   location: https://github.com/Diamondy4/redis-streamly.git
-  tag: 6b635cf5e84fafd58902dd444ea86a721a3a10a3
+  tag: cfbea3f1b254ca13b30e17978470057ac452c325
 
 source-repository-package
   type: git

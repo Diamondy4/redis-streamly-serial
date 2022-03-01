@@ -15,5 +15,5 @@ sendUpstream
     :: (RedisCtx m (Either er), Show er, Serialise a)
     => String
     -> a
-    -> m ByteString
+    -> m (Either er ByteString)
 sendUpstream streamOut x = SRedis.sendUpstream streamOut "data" (serialise x)
